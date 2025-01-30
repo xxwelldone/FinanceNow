@@ -1,7 +1,6 @@
 ﻿using FinanceNow.Entities.DTO;
 using FinanceNow.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceNow.Controllers
@@ -11,6 +10,7 @@ namespace FinanceNow.Controllers
     public class UsuariosController : ControllerBase
     {
         private readonly IUsuarioService _usuarioService;
+ 
 
         public UsuariosController(IUsuarioService usuarioService)
         {
@@ -43,6 +43,7 @@ namespace FinanceNow.Controllers
                 return BadRequest(ex.Message);
             }
         }
+       
         
     }
 }

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿
 namespace FinanceNow.Entities;
 
-public partial class Conta
+public sealed class Conta
 {
     public int ContaId { get; set; }
 
@@ -15,5 +13,5 @@ public partial class Conta
 
     public decimal? Saldo { get; set; }
 
-    public virtual Cliente? Cliente { get; set; }
+    public Cliente? Cliente { get; set; }
 }

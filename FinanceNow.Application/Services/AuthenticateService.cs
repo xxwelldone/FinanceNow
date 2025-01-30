@@ -5,6 +5,7 @@ using System.Text;
 using FinanceNow.Entities;
 using FinanceNow.Services.Interfaces;
 using FinanceNow.UOW;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace FinanceNow.Services

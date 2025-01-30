@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace FinanceNow.Entities;
 
-public partial class CartoesDeCredito
+public sealed class CartoesDeCredito
 {
     public int CartaoId { get; set; }
 
@@ -15,5 +15,5 @@ public partial class CartoesDeCredito
 
     public DateOnly? DataVencimentoFatura { get; set; }
 
-    public virtual Cliente? Cliente { get; set; }
+    public Cliente? Cliente { get; set; }
 }

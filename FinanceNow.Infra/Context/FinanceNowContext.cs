@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿
 using FinanceNow.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,18 +15,18 @@ public partial class FinanceNowContext : DbContext
     {
     }
 
-    public virtual DbSet<CartoesDeCredito> CartoesDeCreditos { get; set; }
+    public   DbSet<CartoesDeCredito> CartoesDeCreditos { get; set; }
 
-    public virtual DbSet<Cliente> Clientes { get; set; }
+    public   DbSet<Cliente> Clientes { get; set; }
 
-    public virtual DbSet<Conta> Contas { get; set; }
+    public   DbSet<Conta> Contas { get; set; }
 
-    public virtual DbSet<Emprestimo> Emprestimos { get; set; }
+    public   DbSet<Emprestimo> Emprestimos { get; set; }
 
-    public virtual DbSet<HistoricoDeCredito> HistoricoDeCreditos { get; set; }
+    public   DbSet<HistoricoDeCredito> HistoricoDeCreditos { get; set; }
 
-    public virtual DbSet<Pagamento> Pagamentos { get; set; }
-    public virtual DbSet<Usuario> Usuarios { get; set; }
+    public   DbSet<Pagamento> Pagamentos { get; set; }
+    public   DbSet<Usuario> Usuarios { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

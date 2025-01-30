@@ -1,6 +1,6 @@
 ﻿namespace FinanceNow.Entities
 {
-    public class Usuario
+    public sealed class Usuario
     {
         public int UsuarioId { get; set; }
         public string NomeCompleto { get; set; }

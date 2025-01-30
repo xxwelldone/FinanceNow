@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace FinanceNow.Entities;
 
-public partial class Pagamento
+public sealed class Pagamento
 {
     public int PagamentoId { get; set; }
 
@@ -13,5 +13,5 @@ public partial class Pagamento
 
     public DateOnly? DataPagamento { get; set; }
 
-    public virtual Emprestimo? Emprestimo { get; set; }
+    public   Emprestimo? Emprestimo { get; set; }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace FinanceNow.Entities;
 
-public partial class Emprestimo
+public sealed class Emprestimo
 {
     public int EmprestimoId { get; set; }
 
@@ -17,7 +17,7 @@ public partial class Emprestimo
 
     public decimal? TaxaJuros { get; set; }
 
-    public virtual Cliente? Cliente { get; set; }
+    public   Cliente? Cliente { get; set; }
 
-    public virtual ICollection<Pagamento> Pagamentos { get; set; } = new List<Pagamento>();
+    public   ICollection<Pagamento> Pagamentos { get; set; } = new List<Pagamento>();
 }

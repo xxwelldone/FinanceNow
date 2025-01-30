@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿
 namespace FinanceNow.Entities;
 
-public partial class Cliente
+public sealed class Cliente
 {
     public int ClienteId { get; set; }
 
@@ -27,11 +25,11 @@ public partial class Cliente
 
     public string? Profissao { get; set; }
 
-    public virtual ICollection<CartoesDeCredito> CartoesDeCreditos { get; set; } = new List<CartoesDeCredito>();
+    public  ICollection<CartoesDeCredito> CartoesDeCreditos { get; set; } = new List<CartoesDeCredito>();
 
-    public virtual ICollection<Conta> Conta { get; set; } = new List<Conta>();
+    public  ICollection<Conta> Conta { get; set; } = new List<Conta>();
 
-    public virtual ICollection<Emprestimo> Emprestimos { get; set; } = new List<Emprestimo>();
+    public  ICollection<Emprestimo> Emprestimos { get; set; } = new List<Emprestimo>();
 
-    public virtual ICollection<HistoricoDeCredito> HistoricoDeCreditos { get; set; } = new List<HistoricoDeCredito>();
+    public  ICollection<HistoricoDeCredito> HistoricoDeCreditos { get; set; } = new List<HistoricoDeCredito>();
 }

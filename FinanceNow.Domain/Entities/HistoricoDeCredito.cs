@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace FinanceNow.Entities;
 
-public partial class HistoricoDeCredito
+public sealed class HistoricoDeCredito
 {
     public int HistoricoId { get; set; }
 
@@ -13,5 +13,5 @@ public partial class HistoricoDeCredito
 
     public string? Descricao { get; set; }
 
-    public virtual Cliente? Cliente { get; set; }
+    public   Cliente? Cliente { get; set; }
 }
