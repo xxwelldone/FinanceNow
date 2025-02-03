@@ -1,4 +1,5 @@
-﻿using FinanceNow.Entities.DTO;
+﻿using FinanceNow.Data;
+using FinanceNow.Entities.DTO;
 using FinanceNow.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ namespace FinanceNow.Controllers
     public class UsuariosController : ControllerBase
     {
         private readonly IUsuarioService _usuarioService;
+        private readonly FinanceNowContext financeNowContext
  
 
         public UsuariosController(IUsuarioService usuarioService)
