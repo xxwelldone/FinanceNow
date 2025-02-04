@@ -1,4 +1,6 @@
 ﻿
+using FinanceNow.Domain.Entities;
+
 namespace FinanceNow.Entities;
 
 public sealed class Cliente
@@ -32,4 +34,8 @@ public sealed class Cliente
     public  ICollection<Emprestimo> Emprestimos { get; set; } = new List<Emprestimo>();
 
     public  ICollection<HistoricoDeCredito> HistoricoDeCreditos { get; set; } = new List<HistoricoDeCredito>();
+    public ICollection<Solicitacao> Solicitacoes { get; set; } = new List<Solicitacao>();
+    public ICollection<Analise> Analises { get; set; }= new List<Analise>();
+    public ICollection<Proposta> Propostas { get; set; } = new List<Proposta>();
+
 }

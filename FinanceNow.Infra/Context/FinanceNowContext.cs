@@ -1,4 +1,5 @@
 ﻿
+using FinanceNow.Domain.Entities;
 using FinanceNow.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,18 +16,21 @@ public partial class FinanceNowContext : DbContext
     {
     }
 
-    public   DbSet<CartoesDeCredito> CartoesDeCreditos { get; set; }
+    public DbSet<CartoesDeCredito> CartoesDeCreditos { get; set; }
 
-    public   DbSet<Cliente> Clientes { get; set; }
+    public DbSet<Cliente> Clientes { get; set; }
 
-    public   DbSet<Conta> Contas { get; set; }
+    public DbSet<Conta> Contas { get; set; }
 
-    public   DbSet<Emprestimo> Emprestimos { get; set; }
+    public DbSet<Emprestimo> Emprestimos { get; set; }
 
-    public   DbSet<HistoricoDeCredito> HistoricoDeCreditos { get; set; }
+    public DbSet<HistoricoDeCredito> HistoricoDeCreditos { get; set; }
 
-    public   DbSet<Pagamento> Pagamentos { get; set; }
-    public   DbSet<Usuario> Usuarios { get; set; }
+    public DbSet<Pagamento> Pagamentos { get; set; }
+    public DbSet<Usuario> Usuarios { get; set; }
+    public DbSet<Solicitacao> Solicitacoes { get; set; }
+    public DbSet<Analise> Analises { get; set; }
+    public DbSet<Proposta> Propostas { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -174,16 +178,58 @@ public partial class FinanceNowContext : DbContext
                 .HasForeignKey(d => d.EmprestimoId)
                 .HasConstraintName("pagamentos_emprestimo_id_fkey");
         });
-        modelBuilder.Entity<Usuario>(entity =>{
+        modelBuilder.Entity<Usuario>(entity =>
+        {
             entity.HasKey(e => e.UsuarioId);
             entity.Property(e => e.UsuarioId).ValueGeneratedOnAdd();
             entity.HasIndex(e => e.CPF).IsUnique();
-            entity.HasIndex(e=> e.Email).IsUnique();
+            entity.HasIndex(e => e.Email).IsUnique();
             entity.Property(e => e.NomeCompleto).HasMaxLength(100);
-            entity.Property(e=> e.CPF).HasMaxLength(11);
-            
+            entity.Property(e => e.CPF).HasMaxLength(11);
 
-            });
+        });
+
+        modelBuilder.Entity<Solicitacao>(entity =>
+        {
+            entity.ToTable("solicitacoes");
+            entity.HasKey(e => e.SolicitacaoId);
+            entity.Property(e => e.SolicitacaoId).ValueGeneratedOnAdd();
+            entity.Property(e => e.Emergencia).HasDefaultValue(false).IsRequired();
+
+        });
+        modelBuilder.Entity<Solicitacao>().HasOne(c => c.Cliente).WithMany(s => s.Solicitacoes).HasForeignKey(f => f.ClienteId);
+        modelBuilder.Entity<Solicitacao>().HasOne(a => a.Analise).WithOne(a => a.Solicitacao).HasForeignKey<Analise>(a => a.SolicitacaoId);
+
+        modelBuilder.Entity<Analise>(entity =>
+        {
+            entity.ToTable("analises");
+            entity.HasKey(e => e.AnaliseId);
+            entity.Property(e => e.PermitirProposta).HasDefaultValue(false).IsRequired();
+            entity.Property(e => e.Score).IsRequired();
+
+        });
+        modelBuilder.Entity<Analise>().HasOne(c => c.Cliente).WithMany(a => a.Analises).HasForeignKey(f => f.ClienteId);
+        modelBuilder.Entity<Analise>().HasOne(a => a.Proposta).WithOne(p => p.Analise).HasForeignKey<Proposta>(p => p.AnaliseId);
+        modelBuilder.Entity<Analise>().HasOne(a => a.Solicitacao).WithOne(s => s.Analise).HasForeignKey<Analise>(a => a.SolicitacaoId);
+
+        modelBuilder.Entity<Proposta>(entity =>
+        {
+            entity.ToTable("propostas");
+            entity.HasKey(e => e.PropostaId);
+            entity.Property(e => e.ValorDisponibilizado).IsRequired();
+            entity.Property(e => e.Juros).IsRequired();
+            entity.Property(e => e.DataQuitar).IsRequired();
+            entity.Property(e => e.DataDisponivel).IsRequired();
+
+
+
+        });
+        modelBuilder.Entity<Proposta>().HasOne(p => p.Cliente).WithMany(c => c.Propostas).HasForeignKey(f => f.ClienteId);
+        modelBuilder.Entity<Proposta>().HasOne(p=> p.Analise).WithOne(a => a.Proposta).HasForeignKey<Proposta>(p => p.AnaliseId);
+
+
+
+
 
         OnModelCreatingPartial(modelBuilder);
     }

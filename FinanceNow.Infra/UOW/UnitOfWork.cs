@@ -15,7 +15,7 @@ namespace FinanceNow.UOW
         private IClienteRepository _clienteRepository;
         private IContaRepository _contaRepository;
         private IEmprestimoRepository _emprestimoRepository;
-        private IHistoricoDeCredito _historicoDeCartao;
+        private IHistoricoDeCreditoRepository _historicoDeCartao;
         private IPagamentoRepository _pagamentoRepository;
 
         protected FinanceNowContext _context;
@@ -32,7 +32,7 @@ namespace FinanceNow.UOW
 
         public IContaRepository ContaRepository => _contaRepository = _contaRepository ?? new ContaRepository(_context);
         public IEmprestimoRepository EmprestimoRepository => _emprestimoRepository = _emprestimoRepository ?? new EmprestimoRepository(_context);
-        public IHistoricoDeCredito HistoricoDeCredito => _historicoDeCartao = _historicoDeCartao ?? new HistoricoDeCredito(_context);
+        public IHistoricoDeCreditoRepository HistoricoDeCredito => _historicoDeCartao = _historicoDeCartao ?? new HistoricoDeCreditoRepository(_context);
 
         public IPagamentoRepository PagamentoRepository => _pagamentoRepository = _pagamentoRepository ?? new PagamentoRepository(_context);
 

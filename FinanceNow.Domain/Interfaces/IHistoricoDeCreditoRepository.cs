@@ -8,7 +8,7 @@ using FinanceNow.Repository.Interfaces;
 
 namespace FinanceNow.Domain.Interfaces
 {
-    public interface IHistoricoDeCredito : IBaseRepository<HistoricoDeCredito>
+    public interface IHistoricoDeCreditoRepository : IBaseRepository<HistoricoDeCredito>
     {
     }
 }

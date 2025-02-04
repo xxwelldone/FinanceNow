@@ -11,7 +11,7 @@ namespace FinanceNow.Controllers
     public class UsuariosController : ControllerBase
     {
         private readonly IUsuarioService _usuarioService;
-        private readonly FinanceNowContext financeNowContext
+        private readonly FinanceNowContext financeNowContext;
  
 
         public UsuariosController(IUsuarioService usuarioService)

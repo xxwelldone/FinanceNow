@@ -8,5 +8,6 @@ namespace FinanceNow.Infra.EntitiesConfiguration
 {
     internal class CartoesDeCreditoConfig 
     {
+        
     }
 }
