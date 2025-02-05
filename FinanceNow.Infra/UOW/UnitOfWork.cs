@@ -18,6 +18,9 @@ namespace FinanceNow.UOW
         private IHistoricoDeCreditoRepository _historicoDeCartao;
         private IPagamentoRepository _pagamentoRepository;
 
+        ISolicitacaoRepository _solicitacaoRepository;
+        IAnaliseRepository _analiseRepository;
+
         protected FinanceNowContext _context;
 
 
@@ -35,6 +38,8 @@ namespace FinanceNow.UOW
         public IHistoricoDeCreditoRepository HistoricoDeCredito => _historicoDeCartao = _historicoDeCartao ?? new HistoricoDeCreditoRepository(_context);
 
         public IPagamentoRepository PagamentoRepository => _pagamentoRepository = _pagamentoRepository ?? new PagamentoRepository(_context);
+        public ISolicitacaoRepository SolicitacaoRepository=>  _solicitacaoRepository = _solicitacaoRepository ?? new SolicitacaoRepository(_context);
+        public IAnaliseRepository AnaliseRepository => _analiseRepository = _analiseRepository?? new AnaliseRepository(_context);
 
         public async Task Commit()
         {

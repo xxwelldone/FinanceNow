@@ -17,5 +17,18 @@ namespace FinanceNow.Domain.Entities
         public double ValorSolicitado { get; set; }
         public bool Emergencia { get; set; }
 
+        public Solicitacao( Cliente cliente, Analise? analise, double valorSolicitado, bool emergencia)
+        {
+           
+            ClienteId = cliente.ClienteId;
+            Cliente = cliente;
+            Analise = analise;
+            ValorSolicitado = valorSolicitado;
+            Emergencia = emergencia;
+        }
+
+        public Solicitacao()
+        {
+        }
     }
 }
