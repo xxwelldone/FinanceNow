@@ -3,6 +3,7 @@ using System;
 using FinanceNow.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FinanceNow.Migrations
 {
     [DbContext(typeof(FinanceNowContext))]
-    partial class FinanceNowContextModelSnapshot : ModelSnapshot
+    [Migration("20250205151348_Regras-JoinTable")]
+    partial class RegrasJoinTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,7 +77,7 @@ namespace FinanceNow.Migrations
 
                     b.HasIndex("RegraId");
 
-                    b.ToTable("analise_regras", (string)null);
+                    b.ToTable("AnaliseRegra");
                 });
 
             modelBuilder.Entity("FinanceNow.Domain.Entities.Proposta", b =>

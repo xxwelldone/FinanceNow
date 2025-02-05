@@ -18,6 +18,7 @@ namespace FinanceNow.Domain.Entities
         public int ClienteId { get; set; }
         public Cliente Cliente { get; set; }
         public Proposta? Proposta { get; set; }
+        public ICollection<AnaliseRegra> RegrasAplicadas { get; set; } = new List<AnaliseRegra>();
 
     }
 }

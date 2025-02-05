@@ -31,6 +31,7 @@ public partial class FinanceNowContext : DbContext
     public DbSet<Solicitacao> Solicitacoes { get; set; }
     public DbSet<Analise> Analises { get; set; }
     public DbSet<Proposta> Propostas { get; set; }
+    public DbSet<Regra> Regras { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -204,6 +205,7 @@ public partial class FinanceNowContext : DbContext
         {
             entity.ToTable("analises");
             entity.HasKey(e => e.AnaliseId);
+            entity.Property(e => e.AnaliseId).ValueGeneratedOnAdd();
             entity.Property(e => e.PermitirProposta).HasDefaultValue(false).IsRequired();
             entity.Property(e => e.Score).IsRequired();
 
@@ -211,11 +213,13 @@ public partial class FinanceNowContext : DbContext
         modelBuilder.Entity<Analise>().HasOne(c => c.Cliente).WithMany(a => a.Analises).HasForeignKey(f => f.ClienteId);
         modelBuilder.Entity<Analise>().HasOne(a => a.Proposta).WithOne(p => p.Analise).HasForeignKey<Proposta>(p => p.AnaliseId);
         modelBuilder.Entity<Analise>().HasOne(a => a.Solicitacao).WithOne(s => s.Analise).HasForeignKey<Analise>(a => a.SolicitacaoId);
+        modelBuilder.Entity<Analise>().HasMany(r => r.RegrasAplicadas).WithOne(a => a.Analise).OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Proposta>(entity =>
         {
             entity.ToTable("propostas");
             entity.HasKey(e => e.PropostaId);
+            entity.Property(entity => entity.PropostaId).ValueGeneratedOnAdd();
             entity.Property(e => e.ValorDisponibilizado).IsRequired();
             entity.Property(e => e.Juros).IsRequired();
             entity.Property(e => e.DataQuitar).IsRequired();
@@ -225,10 +229,22 @@ public partial class FinanceNowContext : DbContext
 
         });
         modelBuilder.Entity<Proposta>().HasOne(p => p.Cliente).WithMany(c => c.Propostas).HasForeignKey(f => f.ClienteId);
-        modelBuilder.Entity<Proposta>().HasOne(p=> p.Analise).WithOne(a => a.Proposta).HasForeignKey<Proposta>(p => p.AnaliseId);
+        modelBuilder.Entity<Proposta>().HasOne(p => p.Analise).WithOne(a => a.Proposta).HasForeignKey<Proposta>(p => p.AnaliseId);
+        modelBuilder.Entity<Regra>(entity =>
+        {
+            entity.ToTable("regras");
+            entity.HasKey(e => e.RegraId);
+            entity.Property(e => e.RegraId).ValueGeneratedOnAdd();
 
+        });
+        modelBuilder.Entity<AnaliseRegra>(entity => {
+            entity.ToTable("analise_regras");
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
-
+        });
+        modelBuilder.Entity<AnaliseRegra>().HasOne(a => a.Analise).WithMany(a => a.RegrasAplicadas).HasForeignKey(a => a.AnaliseId);
+        modelBuilder.Entity<AnaliseRegra>().HasOne(r => r.Regra).WithMany().HasForeignKey(r => r.RegraId);
 
 
         OnModelCreatingPartial(modelBuilder);

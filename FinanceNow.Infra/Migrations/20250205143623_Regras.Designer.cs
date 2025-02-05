@@ -3,6 +3,7 @@ using System;
 using FinanceNow.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace FinanceNow.Migrations
 {
     [DbContext(typeof(FinanceNowContext))]
-    partial class FinanceNowContextModelSnapshot : ModelSnapshot
+    [Migration("20250205143623_Regras")]
+    partial class Regras
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,29 +55,6 @@ namespace FinanceNow.Migrations
                         .IsUnique();
 
                     b.ToTable("analises", (string)null);
-                });
-
-            modelBuilder.Entity("FinanceNow.Domain.Entities.AnaliseRegra", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AnaliseId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("RegraId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AnaliseId");
-
-                    b.HasIndex("RegraId");
-
-                    b.ToTable("analise_regras", (string)null);
                 });
 
             modelBuilder.Entity("FinanceNow.Domain.Entities.Proposta", b =>
@@ -121,6 +101,9 @@ namespace FinanceNow.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RegraId"));
 
+                    b.Property<int?>("AnaliseId")
+                        .HasColumnType("integer");
+
                     b.Property<bool>("Ativo")
                         .HasColumnType("boolean");
 
@@ -142,6 +125,8 @@ namespace FinanceNow.Migrations
                         .HasColumnType("double precision");
 
                     b.HasKey("RegraId");
+
+                    b.HasIndex("AnaliseId");
 
                     b.ToTable("regras", (string)null);
                 });
@@ -449,25 +434,6 @@ namespace FinanceNow.Migrations
                     b.Navigation("Solicitacao");
                 });
 
-            modelBuilder.Entity("FinanceNow.Domain.Entities.AnaliseRegra", b =>
-                {
-                    b.HasOne("FinanceNow.Domain.Entities.Analise", "Analise")
-                        .WithMany("RegrasAplicadas")
-                        .HasForeignKey("AnaliseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("FinanceNow.Domain.Entities.Regra", "Regra")
-                        .WithMany()
-                        .HasForeignKey("RegraId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Analise");
-
-                    b.Navigation("Regra");
-                });
-
             modelBuilder.Entity("FinanceNow.Domain.Entities.Proposta", b =>
                 {
                     b.HasOne("FinanceNow.Domain.Entities.Analise", "Analise")
@@ -485,6 +451,14 @@ namespace FinanceNow.Migrations
                     b.Navigation("Analise");
 
                     b.Navigation("Cliente");
+                });
+
+            modelBuilder.Entity("FinanceNow.Domain.Entities.Regra", b =>
+                {
+                    b.HasOne("FinanceNow.Domain.Entities.Analise", null)
+                        .WithMany("Regras")
+                        .HasForeignKey("AnaliseId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("FinanceNow.Domain.Entities.Solicitacao", b =>
@@ -552,7 +526,7 @@ namespace FinanceNow.Migrations
                 {
                     b.Navigation("Proposta");
 
-                    b.Navigation("RegrasAplicadas");
+                    b.Navigation("Regras");
                 });
 
             modelBuilder.Entity("FinanceNow.Domain.Entities.Solicitacao", b =>
